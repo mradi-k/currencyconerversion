@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <script src="jquery-3.6.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+                $(document).ajaxStart(function(){
+                    $("#btn1").html("pleasewait....");
+                    $("#btn1").attr("disabled","true");
+
+                });
+
+
+
+                $(document).ready(function(){
+
+                    $("#fromcurrency").chosen();
+                    $("#tocurrency").chosen();
+
+                    $("#btn1").click(function(){
+                        var amt=$("#amount").val();
+                        var fromcur=$("#fromcurrency").val();
+                        var tocur=$("#tocurrency").val();
+
+                        console.log(amt);
+                        console.log(fromcur);
+                        console.log(tocur);
+
+                        $.ajax({
+                            url:"https://api.apilayer.com/fixer/convert",
+                            type:"get",
+                            headers:{"apikey":"f2dC2PuTRyBSk9gAEuW5iVs0U2Im7f7B"},
+                            data:{amount:amt,from:fromcur,to:tocur},
+                            success:function(res){
+                                $("#para1").html(res.result);
+                            },
+                            error: function(){
+                                alert("something went wrong");
+                            }
+                        });
+
+                    });
+                });
+
+                $(document).ajaxComplete(function(){
+                    $("#btn1").html("convert");
+                    $("#btn1").removeAttr("disabled");
+                })
+        </script>
+         <style>
+            body{
+                background-color: rgb(133, 146, 160);
+            }
+            #div1{
+                margin-left: 450px;
+                align-items: center;
+                font-weight: 20px;
+                padding: 50px;
+                height: 250px;
+                width: 400px;
+                background-color: rgb(40, 35, 119);
+                border-radius: 5px;
+                color: aliceblue;
+                border: 2px solid gray;
+               
+            }
+            #btn1{
+                background-color: aqua;
+                border: 2px solid red;
+                border-radius: 5px;
+            }
+            #t1{
+                height: 20px;
+                width: 200px;
+                background-color:rgb(red, green, blue);
+            }
+            #fromcurrency,#tocurrency{
+                width: 100px;
+                background-color: rgb(15, 78, 57);
+            }
+        </style>
+    </head>
+    <body>
+        <!--  f2dC2PuTRyBSk9gAEuW5iVs0U2Im7f7B  -->
+        <div id="div1">
+            Enter Amount <input type="text" name="" id="amount">
+
+            <br/><br/>
+
+            select currency(convert fromcurrency)
+            <select name="" id="fromcurrency">
+                <option value="INR">India</option>
+                <option value="USD">Usa</option>
+                <option value="EUR">EUR</option>
+                <option value="AED">United Arab Emirates</option>
+                <option value="AFN">Afghanistan</option>
+                <option value="AMD">Armenia</option>
+                <option value="AOA">Angola</option>
+                <option value="AUD">Australia</option>
+                <option value="CAD">Canada</option>
+                <option value="IDR">Indonesia</option>
+                <option value="HUF">Hungary</option>
+                <option value="IDR">Indonesia</option>
+                <option value="IDR">Indonesia</option>
+                <option value="ILS">Israel</option>
+                <option value="IMP">sle of Man</option>
+                <option value="IQD">Iraq</option>
+                <option value="JPY">Japan</option>
+                <option value="KEY">Kenya</option>
+
+            </select>
+            <br><br>
+            Select currency(Convert To)
+            <select name="" id="tocurrency">
+                <option value="INR">India</option>
+                <option value="USD">Usa</option>
+                <option value="EUR">EUR</option>
+                <option value="AED">United Arab Emirates</option>
+                <option value="AFN">Afghanistan</option>
+                <option value="AMD">Armenia</option>
+                <option value="AOA">Angola</option>
+                <option value="AUD">Australia</option>
+                <option value="CAD">Canada</option>
+                <option value="IDR">Indonesia</option>
+                <option value="HUF">Hungary</option>
+                <option value="IDR">Indonesia</option>
+                <option value="IDR">Indonesia</option>
+                <option value="ILS">Israel</option>
+                <option value="IMP">sle of Man</option>
+                <option value="IQD">Iraq</option>
+                <option value="JPY">Japan</option>
+                <option value="KEY">Kenya</option>
+            </select>
+            <br><br>
+                <Button id="btn1">Convert</Button>
+                <hr>
+                <p id="para1"></p>
+        </div>
+        <hr/>
+
+    </body>
+</html>
